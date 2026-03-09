@@ -30,18 +30,12 @@
                 <option value="">Selecione...</option>
                 <option value="Zero Carbo">Nenhum (Vou comer só proteína e fruta)</option>
                 <option value="1 Pão Francês">1 Pão Francês (50g)</option>
+                <option value="100g Batata Inglesa">100g Batata Inglesa</option>
                 <option value="100g Batata Doce">100g Batata Doce</option>
                 <option value="100g Mandioca">100g Mandioca</option>
             </select>
 
-            <label class="block text-xs text-gray-400 mb-1">3. Vegetal (Opcional cedo):</label>
-            <select id="cafe-veg" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-yellow-400">
-                <option value="">Nenhum / Selecione...</option>
-                <option value="150g Ora-pro-nóbis">150g Ora-pro-nóbis</option>
-                <option value="50g Tomate e Cebola">50g Tomate e Cebola</option>
-            </select>
-
-            <label class="block text-xs text-gray-400 mb-1">4. Fruta:</label>
+            <label class="block text-xs text-gray-400 mb-1">3. Fruta:</label>
             <select id="cafe-fruta" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 outline-none border border-gray-600 focus:border-yellow-400">
                 <option value="">Selecione...</option>
                 <option value="100g Mamão">100g Mamão</option>
@@ -64,10 +58,13 @@
             <label class="block text-xs text-gray-400 mb-1">3. Vegetal de Volume (Obrigatório):</label>
             <select id="almoco-veg" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-blue-400"></select>
 
-            <label class="block text-xs text-gray-400 mb-1">4. Vegetal de Sabor/Cor:</label>
+            <label class="block text-xs text-gray-400 mb-1">4. Vegetal de Sabor/Cor (Salada):</label>
             <select id="almoco-sabor" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-blue-400"></select>
 
-            <label class="block text-xs text-gray-400 mb-1">5. Fruta:</label>
+            <label class="block text-xs text-yellow-300 font-bold mb-1">5. Tempero da Panela:</label>
+            <select id="almoco-tempero" onchange="atualizarMotor()" class="w-full bg-gray-800 text-yellow-300 rounded p-2 mb-2 outline-none border border-yellow-600 focus:border-yellow-400"></select>
+
+            <label class="block text-xs text-gray-400 mb-1">6. Fruta:</label>
             <select id="almoco-fruta" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 outline-none border border-gray-600 focus:border-blue-400"></select>
         </div>
 
@@ -91,10 +88,13 @@
             <label class="block text-xs text-gray-400 mb-1">2. Vegetal de Volume (Obrigatório):</label>
             <select id="janta-veg" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-indigo-400"></select>
 
-            <label class="block text-xs text-gray-400 mb-1">3. Vegetal de Sabor/Cor:</label>
+            <label class="block text-xs text-gray-400 mb-1">3. Vegetal de Sabor/Cor (Salada):</label>
             <select id="janta-sabor" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-indigo-400"></select>
 
-            <label class="block text-xs text-gray-400 mb-1">4. Fruta:</label>
+            <label class="block text-xs text-yellow-300 font-bold mb-1">4. Tempero da Panela:</label>
+            <select id="janta-tempero" onchange="atualizarMotor()" class="w-full bg-gray-800 text-yellow-300 rounded p-2 mb-2 outline-none border border-yellow-600 focus:border-yellow-400"></select>
+
+            <label class="block text-xs text-gray-400 mb-1">5. Fruta:</label>
             <select id="janta-fruta" onchange="finalizar()" class="w-full bg-gray-700 text-white rounded p-2 outline-none border border-gray-600 focus:border-indigo-400"></select>
         </div>
 
@@ -107,34 +107,44 @@
     <script>
         // Bancos de Dados de Ingredientes
         const proteinasPesadas = ["120g Sassami", "120g Tilápia", "1 Lata Atum", "1 Lata Sardinha"];
-        const proteinasLeves = ["3 Ovos", "150g Iogurte Grego"];
         const vegVolume = ["150g Ora-pro-nóbis", "150g Acelga", "150g Repolho Branco", "150g Brócolis", "150g Couve-flor", "150g Espinafre", "150g Abobrinha", "150g Berinjela"];
         const vegSabor = ["50g Tomate", "50g Cenoura Ralada", "50g Beterraba", "50g Pepino", "50g Rabanete", "50g Pimentão"];
+        
+        // NOVO: Banco de Temperos Especiais
+        const opcoesTempero = [
+            "Alho, Cebola e Sal (Clássico)",
+            "10g Curry Japonês Daiso",
+            "Limão, Pimenta do Reino e Orégano",
+            "Páprica Defumada e Fio de Azeite",
+            "Cúrcuma (Açafrão) e Cheiro Verde"
+        ];
+
         const frutasTotais = ["100g Maçã", "100g Laranja", "100g Ameixa", "100g Pera", "100g Manga", "100g Caqui", "100g Melão", "100g Mamão", "100g Banana"];
 
-        // Função auxiliar para preencher os selects
         function popularSelect(id, opcoes) {
             const select = document.getElementById(id);
             const valorAtual = select.value;
             select.innerHTML = '<option value="">Selecione...</option>' + opcoes.map(op => `<option value="${op}">${op}</option>`).join('');
-            if(opcoes.includes(valorAtual)) select.value = valorAtual; // Mantém a escolha se ela ainda for válida
+            if(opcoes.includes(valorAtual)) select.value = valorAtual; 
         }
 
-        // Popula as listas fixas que não dependem do estado ao carregar a página
         window.onload = () => {
             popularSelect('almoco-veg', vegVolume);
             popularSelect('almoco-sabor', vegSabor);
+            popularSelect('almoco-tempero', opcoesTempero); // Carregando os temperos
             popularSelect('almoco-fruta', frutasTotais);
+            
             popularSelect('pre-fruta', frutasTotais);
+            
             popularSelect('janta-veg', vegVolume);
             popularSelect('janta-sabor', vegSabor);
+            popularSelect('janta-tempero', opcoesTempero); // Carregando os temperos
             popularSelect('janta-fruta', frutasTotais);
+            
             atualizarMotor();
         }
 
-        // MOTOR DO SISTEMA ESPECIALISTA
         function atualizarMotor() {
-            // Lendo as escolhas atuais
             const pCafe = document.getElementById('cafe-prot').value;
             const cCafe = document.getElementById('cafe-carb').value;
             const fCafe = document.getElementById('cafe-fruta').value;
@@ -142,58 +152,58 @@
             const pAlmoco = document.getElementById('almoco-prot').value;
             const cAlmoco = document.getElementById('almoco-carb').value;
             const vAlmoco = document.getElementById('almoco-veg').value;
+            const sAlmoco = document.getElementById('almoco-sabor').value;
+            const tAlmoco = document.getElementById('almoco-tempero').value;
             const fAlmoco = document.getElementById('almoco-fruta').value;
 
             // --- REGRAS DO ALMOÇO ---
-            // 1. Destravar Almoço se o Café estiver pronto
             if(pCafe && cCafe && fCafe) {
                 document.getElementById('step-almoco').classList.remove('opacity-50', 'pointer-events-none');
             }
 
-            // 2. Filtro de Proteína (Não deixar repetir a carne exata do café)
             let protDisponiveisAlmoco = proteinasPesadas.filter(p => p !== pCafe);
             popularSelect('almoco-prot', protDisponiveisAlmoco);
 
-            // 3. O Filtro Mágico de Carboidrato
             let carbosAlmoco = [];
             const aviso = document.getElementById('aviso-carbo');
             
             if(cCafe.includes('Pão') || cCafe.includes('100g')) {
-                // Comeu carbo pesado no café. Reduz o almoço.
-                carbosAlmoco = ["Zero Carbo", "50g Batata Doce (Metade)", "50g Mandioca (Metade)", "150g Abóbora (Leve)"];
+                carbosAlmoco = ["Zero Carbo", "50g Batata Inglesa (Metade)", "50g Batata Doce (Metade)", "50g Mandioca (Metade)", "150g Abóbora"];
                 aviso.classList.remove('hidden');
             } else {
-                // Não comeu carbo ou carbo zero no café. Libera normal no almoço.
-                carbosAlmoco = ["Zero Carbo", "100g Batata Doce", "100g Batata Inglesa", "100g Mandioca", "150g Abóbora"];
+                carbosAlmoco = ["Zero Carbo", "100g Batata Inglesa", "100g Batata Doce", "100g Mandioca", "150g Abóbora"];
                 aviso.classList.add('hidden');
             }
             popularSelect('almoco-carb', carbosAlmoco);
 
-
             // --- REGRAS DO PRÉ-TREINO ---
-            // 1. Destravar Pré-Treino se Almoço estiver pronto
-            if(pAlmoco && cAlmoco && vAlmoco && fAlmoco) {
+            // Só libera se o almoço estiver completo (incluindo o tempero)
+            if(pAlmoco && cAlmoco && vAlmoco && sAlmoco && tAlmoco && fAlmoco) {
                 document.getElementById('step-pre').classList.remove('opacity-50', 'pointer-events-none');
             }
 
-            // 2. Filtro de Proteína Pré-Treino
             popularSelect('pre-prot', ["1 Lata Atum", "3 Ovos", "150g Iogurte Grego"]);
             const pPre = document.getElementById('pre-prot').value;
             const fPre = document.getElementById('pre-fruta').value;
 
             // --- REGRAS DA JANTA ---
-            // 1. Destravar Janta se Pré-treino estiver pronto
             if(pPre && fPre) {
                 document.getElementById('step-janta').classList.remove('opacity-50', 'pointer-events-none');
             }
 
-            // 2. Filtro de Proteína da Janta (Filtra a do Almoço e Café pra variar)
             let protDisponiveisJanta = [...proteinasPesadas, "3 Ovos"].filter(p => p !== pAlmoco && p !== pCafe);
             popularSelect('janta-prot', protDisponiveisJanta);
         }
 
         function finalizar() {
-            if(document.getElementById('janta-fruta').value !== "") {
+            const pJanta = document.getElementById('janta-prot').value;
+            const vJanta = document.getElementById('janta-veg').value;
+            const sJanta = document.getElementById('janta-sabor').value;
+            const tJanta = document.getElementById('janta-tempero').value;
+            const fJanta = document.getElementById('janta-fruta').value;
+
+            // Exige que todos os campos da janta (incluindo tempero) estejam preenchidos para dar sucesso
+            if(pJanta && vJanta && sJanta && tJanta && fJanta) {
                 document.getElementById('msg-sucesso').classList.remove('hidden');
             }
         }
