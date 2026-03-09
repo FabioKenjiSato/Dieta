@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dieta 65kg - Fábio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen p-4 md:p-8">
+
+    <div class="max-w-md mx-auto bg-gray-800 rounded-xl shadow-lg p-6">
+        <h1 class="text-2xl font-bold text-green-400 mb-2">Motor de Dieta: 65kg</h1>
+        <p class="text-sm text-gray-400 mb-6">Regra Ativa: Proteína Densa de Manhã e Almoço.</p>
+
+        <button onclick="gerarCardapio()" class="w-full bg-green-500 hover:bg-green-600 text-gray-900 font-bold py-3 px-4 rounded-lg transition duration-200">
+            Gerar Cardápio de Hoje
+        </button>
+
+        <div id="resultado" class="mt-8 hidden space-y-4">
+            
+            <div class="bg-gray-700 p-4 rounded-lg border-l-4 border-yellow-500">
+                <h2 class="text-lg font-bold text-yellow-400 mb-2">☕ Café da Manhã</h2>
+                <ul id="listaCafe" class="text-sm space-y-1 text-gray-300"></ul>
+            </div>
+
+            <div class="bg-gray-700 p-4 rounded-lg border-l-4 border-blue-500">
+                <h2 class="text-lg font-bold text-blue-400 mb-2">☀️ Almoço</h2>
+                <ul id="listaAlmoco" class="text-sm space-y-1 text-gray-300"></ul>
+            </div>
+
+            <div class="bg-gray-700 p-4 rounded-lg border-l-4 border-indigo-500">
+                <h2 class="text-lg font-bold text-indigo-400 mb-2">🌙 Janta (Pós-Treino)</h2>
+                <ul id="listaJanta" class="text-sm space-y-1 text-gray-300"></ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // O Banco de Dados Separado por Horário
+        const bd = {
+            proteinas_manha: ["120g Sassami desfiado", "1 Lata de Atum"],
+            proteinas_almoco: ["120g Tilápia", "120g Sassami", "1 Lata Sardinha"],
+            proteinas_janta: ["3 Ovos inteiros", "1 Lata Sardinha", "120g Tilápia", "1 Lata Atum"],
+            
+            tuberculos: ["100g Batata Doce", "100g Batata Inglesa", "100g Mandioca", "150g Abóbora", "1 Pão Francês (50g)"],
+            vegetais_volume: ["150g Ora-pro-nóbis", "150g Acelga", "150g Repolho Branco", "150g Espinafre", "150g Brócolis", "150g Couve-flor", "150g Abobrinha", "150g Berinjela"],
+            vegetais_sabor: ["50g Tomate", "50g Cenoura ralada", "50g Beterraba", "50g Rabanete", "50g Pepino", "50g Pimentão"],
+            frutas: ["100g Maçã", "100g Laranja", "100g Ameixa", "100g Pera", "100g Caqui", "100g Melão", "100g Mamão", "100g Banana"],
+            temperos: ["Alho e Cebola", "10g Curry Japonês Daiso", "Limão e Pimenta"]
+        };
+
+        function sortear(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function gerarCardapio() {
+            const listaCafe = document.getElementById('listaCafe');
+            const listaAlmoco = document.getElementById('listaAlmoco');
+            const listaJanta = document.getElementById('listaJanta');
+            
+            listaCafe.innerHTML = '';
+            listaAlmoco.innerHTML = '';
+            listaJanta.innerHTML = '';
+
+            // --- LÓGICA DO CAFÉ (Obrigatório Carne + Carbo de Energia) ---
+            let protCafe = sortear(bd.proteinas_manha);
+            let carboCafe = Math.random() > 0.5 ? "1 Pão Francês (50g)" : sortear(bd.tuberculos.filter(t => !t.includes("Pão")));
+            let frutaCafe = sortear(bd.frutas);
+            
+            const itensCafe = [protCafe, carboCafe, `Bebida/Acompanhamento: ${frutaCafe}`];
+            itensCafe.forEach(item => listaCafe.innerHTML += `<li>• ${item}</li>`);
+
+            // --- LÓGICA DO ALMOÇO ---
+            let protAlmoco = sortear(bd.proteinas_almoco);
+            
+            // Regra: Se o app sorteou Pão de manhã, ele corta o carbo do almoço
+            let carboAlmoco = carboCafe.includes("Pão") ? 
+                "<span class='text-red-400'>[Carbo zerado no almoço (Pão comido de manhã)]</span>" : 
+                sortear(bd.tuberculos.filter(t => !t.includes("Pão")));
+
+            let volAlmoco = sortear(bd.vegetais_volume);
+            let sabAlmoco = sortear(bd.vegetais_sabor);
+            let tempAlmoco = sortear(bd.temperos);
+            
+            const itensAlmoco = [protAlmoco, carboAlmoco, `${volAlmoco} + ${sabAlmoco}`, `Preparo: ${tempAlmoco}`];
+            itensAlmoco.forEach(item => listaAlmoco.innerHTML += `<li>• ${item}</li>`);
+
+            // --- LÓGICA DA JANTA ---
+            let protJanta = sortear(bd.proteinas_janta);
+            
+            // Impede repetir a mesma carne do almoço
+            while (protJanta === protAlmoco || protJanta === protCafe) {
+                protJanta = sortear(bd.proteinas_janta); 
+            }
+
+            let volJanta = sortear(bd.vegetais_volume);
+            let sabJanta = sortear(bd.vegetais_sabor);
+            let frutaJanta = sortear(bd.frutas);
+
+            const itensJanta = [protJanta, `<span class="text-green-400 font-semibold">[Zero Raízes - Foco em Secar]</span>`, `${volJanta} + ${sabJanta}`, `Sobremesa: ${frutaJanta}`];
+            itensJanta.forEach(item => listaJanta.innerHTML += `<li>• ${item}</li>`);
+
+            document.getElementById('resultado').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
