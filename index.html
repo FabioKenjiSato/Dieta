@@ -3,105 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dieta 65kg - Fábio</title>
+    <title>Dieta Inteligente - Fábio (65kg)</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-gray-100 font-sans min-h-screen p-4 md:p-8">
 
     <div class="max-w-md mx-auto bg-gray-800 rounded-xl shadow-lg p-6">
         <h1 class="text-2xl font-bold text-green-400 mb-2">Motor de Dieta: 65kg</h1>
-        <p class="text-sm text-gray-400 mb-6">Regra Ativa: Proteína Densa de Manhã e Almoço.</p>
+        <p class="text-sm text-gray-400 mb-6">O que você comer agora dita o resto do seu dia.</p>
 
-        <button onclick="gerarCardapio()" class="w-full bg-green-500 hover:bg-green-600 text-gray-900 font-bold py-3 px-4 rounded-lg transition duration-200">
-            Gerar Cardápio de Hoje
-        </button>
-
-        <div id="resultado" class="mt-8 hidden space-y-4">
+        <div id="step-cafe" class="mb-6 border-l-4 border-yellow-500 pl-4">
+            <h2 class="text-lg font-bold text-yellow-400 mb-2">☕ 1. Café da Manhã</h2>
             
-            <div class="bg-gray-700 p-4 rounded-lg border-l-4 border-yellow-500">
-                <h2 class="text-lg font-bold text-yellow-400 mb-2">☕ Café da Manhã</h2>
-                <ul id="listaCafe" class="text-sm space-y-1 text-gray-300"></ul>
-            </div>
+            <label class="block text-sm text-gray-300 mb-1">Escolha a Base:</label>
+            <select id="cafe-base" onchange="atualizaCafe()" class="w-full bg-gray-700 text-white rounded p-2 mb-3 outline-none">
+                <option value="">Selecione...</option>
+                <option value="pesado">1 Pão Francês + 3 Ovos + 200ml Leite (Carbo Alto)</option>
+                <option value="leve">3 Ovos + 150g Iogurte Grego (Low Carb)</option>
+                <option value="proteico">120g Sassami Desfiado + 150g Iogurte (Sem Pão)</option>
+            </select>
 
-            <div class="bg-gray-700 p-4 rounded-lg border-l-4 border-blue-500">
-                <h2 class="text-lg font-bold text-blue-400 mb-2">☀️ Almoço</h2>
-                <ul id="listaAlmoco" class="text-sm space-y-1 text-gray-300"></ul>
+            <div id="cafe-fruta-div" class="hidden">
+                <label class="block text-sm text-gray-300 mb-1">Escolha a Fruta:</label>
+                <select id="cafe-fruta" onchange="mostrarBtn('btn-cafe')" class="w-full bg-gray-700 text-white rounded p-2 mb-3 outline-none"></select>
+                <button id="btn-cafe" onclick="travarCafe()" class="hidden w-full bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 rounded">Confirmar Café</button>
             </div>
-
-            <div class="bg-gray-700 p-4 rounded-lg border-l-4 border-indigo-500">
-                <h2 class="text-lg font-bold text-indigo-400 mb-2">🌙 Janta (Pós-Treino)</h2>
-                <ul id="listaJanta" class="text-sm space-y-1 text-gray-300"></ul>
-            </div>
-
         </div>
+
+        <div id="step-almoco" class="mb-6 border-l-4 border-blue-500 pl-4 hidden opacity-50 pointer-events-none transition-all duration-300">
+            <h2 class="text-lg font-bold text-blue-400 mb-2">☀️ 2. Almoço</h2>
+            <div id="aviso-almoco" class="text-xs text-red-400 mb-2 font-bold hidden">⚠️ Carbo reduzido pois você comeu pão de manhã!</div>
+            
+            <label class="block text-sm text-gray-300 mb-1">Escolha a Carne:</label>
+            <select id="almoco-base" onchange="atualizaAlmoco()" class="w-full bg-gray-700 text-white rounded p-2 mb-3 outline-none">
+                <option value="">Selecione a proteína...</option>
+                <option value="sassami">120g Sassami</option>
+                <option value="tilapia">120g Tilápia</option>
+                <option value="atum">1 Lata de Atum (Escorrido)</option>
+                <option value="sardinha">1 Lata de Sardinha</option>
+            </select>
+
+            <div id="almoco-acomp-div" class="hidden">
+                <label class="block text-sm text-gray-300 mb-1">Acompanhamento (Calculado):</label>
+                <select id="almoco-acomp" onchange="liberarFrutaAlmoco()" class="w-full bg-gray-700 text-white rounded p-2 mb-3 outline-none"></select>
+                
+                <label class="block text-sm text-gray-300 mb-1">Fruta da Tarde:</label>
+                <select id="almoco-fruta" onchange="mostrarBtn('btn-almoco')" class="w-full bg-gray-700 text-white rounded p-2 mb-3 outline-none">
+                    <option value="">Selecione...</option>
+                    <option value="100g Maçã">100g Maçã</option>
+                    <option value="100g Laranja">100g Laranja</option>
+                    <option value="100g Pera">100g Pera</option>
+                </select>
+                <button id="btn-almoco" onclick="travarAlmoco()" class="hidden w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded">Confirmar Almoço</button>
+            </div>
+        </div>
+
+        <div id="step-pre" class="mb-6 border-l-4 border-orange-500 pl-4 hidden opacity-50 pointer-events-none transition-all duration-300">
+            <h2 class="text-lg font-bold text-orange-400 mb-2">⚡ 3. Pré-Treino</h2>
+            
+            <label class="block text-sm text-gray-300 mb-1">Energia Rápida:</label>
+            <select id="pre-base" onchange="mostrarBtn('btn-pre')" class="w-full bg-gray-700 text-white rounded p-2 mb-3 outline-none">
+                <option value="">Selecione...</option>
+                <option value="iogurte">150g Iogurte Grego + 100g Banana (Digestão Rápida)</option>
+                <option value="ovos">3 Ovos Cozidos + 100g Mamão (Força)</option>
+                <option value="atum">1 Lata Atum + 100g Laranja (Proteína Limpa)</option>
+            </select>
+            <button id="btn-pre" onclick="travarPre()" class="hidden w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-2 rounded">Confirmar Pré-Treino</button>
+        </div>
+
+        <div id="step-janta" class="mb-6 border-l-4 border-indigo-500 pl-4 hidden opacity-50 pointer-events-none transition-all duration-300">
+            <h2 class="text-lg font-bold text-indigo-400 mb-2">🌙 4. Janta (Pós-Treino)</h2>
+            <div class="text-xs text-green-400 mb-2 font-bold">✅ Tubérculos Bloqueados. Foco em secar!</div>
+            
+            <label class="block text-sm text-gray-300 mb-1">Proteína Restante:</label>
+            <select id="janta-base" onchange="atualizaJanta()" class="w-full bg-gray-700 text-white rounded p-2 mb-3 outline-none"></select>
+
+            <div id="janta-acomp-div" class="hidden">
+                <label class="block text-sm text-gray-300 mb-1">Salada de Volume:</label>
+                <select id="janta-acomp" onchange="liberarFrutaJanta()" class="w-full bg-gray-700 text-white rounded p-2 mb-3 outline-none"></select>
+                
+                <label class="block text-sm text-gray-300 mb-1">Sobremesa:</label>
+                <select id="janta-fruta" onchange="mostrarBtn('btn-janta')" class="w-full bg-gray-700 text-white rounded p-2 mb-3 outline-none">
+                    <option value="">Selecione...</option>
+                    <option value="100g Melão">100g Melão</option>
+                    <option value="100g Morangos">100g Morangos</option>
+                    <option value="100g Caqui">100g Caqui</option>
+                    <option value="100g Ameixa">100g Ameixa</option>
+                </select>
+                <button id="btn-janta" onclick="finalizarDia()" class="hidden w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded">Finalizar Dia</button>
+            </div>
+        </div>
+
+        <div id="msg-sucesso" class="hidden text-center bg-green-900 border border-green-500 rounded p-4 text-green-300 font-bold">
+            🎉 Cardápio Fechado! <br> Proteína batida e déficit calórico garantido. Bom treino!
+        </div>
+
     </div>
 
     <script>
-        // O Banco de Dados Separado por Horário
-        const bd = {
-            proteinas_manha: ["120g Sassami desfiado", "1 Lata de Atum"],
-            proteinas_almoco: ["120g Tilápia", "120g Sassami", "1 Lata Sardinha"],
-            proteinas_janta: ["3 Ovos inteiros", "1 Lata Sardinha", "120g Tilápia", "1 Lata Atum"],
-            
-            tuberculos: ["100g Batata Doce", "100g Batata Inglesa", "100g Mandioca", "150g Abóbora", "1 Pão Francês (50g)"],
-            vegetais_volume: ["150g Ora-pro-nóbis", "150g Acelga", "150g Repolho Branco", "150g Espinafre", "150g Brócolis", "150g Couve-flor", "150g Abobrinha", "150g Berinjela"],
-            vegetais_sabor: ["50g Tomate", "50g Cenoura ralada", "50g Beterraba", "50g Rabanete", "50g Pepino", "50g Pimentão"],
-            frutas: ["100g Maçã", "100g Laranja", "100g Ameixa", "100g Pera", "100g Caqui", "100g Melão", "100g Mamão", "100g Banana"],
-            temperos: ["Alho e Cebola", "10g Curry Japonês Daiso", "Limão e Pimenta"]
+        // ESTADO GLOBAL DO SISTEMA (A "memória" do app)
+        let estado = {
+            comeuPaoManha: false,
+            carneAlmoco: ""
         };
 
-        function sortear(array) {
-            return array[Math.floor(Math.random() * array.length)];
+        const frutasPesadas = `<option value="">Selecione...</option><option value="100g Banana">100g Banana</option><option value="100g Manga">100g Manga</option><option value="100g Caqui">100g Caqui</option>`;
+        const frutasLeves = `<option value="">Selecione...</option><option value="100g Mamão">100g Mamão</option><option value="100g Melão">100g Melão</option><option value="100g Maçã">100g Maçã</option>`;
+
+        function mostrarBtn(id) { document.getElementById(id).classList.remove('hidden'); }
+
+        // --- PASSO 1: CAFÉ ---
+        function atualizaCafe() {
+            const base = document.getElementById('cafe-base').value;
+            const selectFruta = document.getElementById('cafe-fruta');
+            document.getElementById('cafe-fruta-div').classList.remove('hidden');
+            
+            // Regra: Se a base já tem carbo pesado (pão), sugere fruta leve. Se não, libera fruta pesada.
+            if(base === 'pesado') {
+                selectFruta.innerHTML = frutasLeves;
+                estado.comeuPaoManha = true;
+            } else {
+                selectFruta.innerHTML = frutasPesadas;
+                estado.comeuPaoManha = false;
+            }
         }
 
-        function gerarCardapio() {
-            const listaCafe = document.getElementById('listaCafe');
-            const listaAlmoco = document.getElementById('listaAlmoco');
-            const listaJanta = document.getElementById('listaJanta');
+        function travarCafe() {
+            document.getElementById('cafe-base').disabled = true;
+            document.getElementById('cafe-fruta').disabled = true;
+            document.getElementById('btn-cafe').classList.add('hidden');
             
-            listaCafe.innerHTML = '';
-            listaAlmoco.innerHTML = '';
-            listaJanta.innerHTML = '';
-
-            // --- LÓGICA DO CAFÉ (Obrigatório Carne + Carbo de Energia) ---
-            let protCafe = sortear(bd.proteinas_manha);
-            let carboCafe = Math.random() > 0.5 ? "1 Pão Francês (50g)" : sortear(bd.tuberculos.filter(t => !t.includes("Pão")));
-            let frutaCafe = sortear(bd.frutas);
+            // Destrava o almoço
+            const almoco = document.getElementById('step-almoco');
+            almoco.classList.remove('hidden', 'opacity-50', 'pointer-events-none');
             
-            const itensCafe = [protCafe, carboCafe, `Bebida/Acompanhamento: ${frutaCafe}`];
-            itensCafe.forEach(item => listaCafe.innerHTML += `<li>• ${item}</li>`);
-
-            // --- LÓGICA DO ALMOÇO ---
-            let protAlmoco = sortear(bd.proteinas_almoco);
-            
-            // Regra: Se o app sorteou Pão de manhã, ele corta o carbo do almoço
-            let carboAlmoco = carboCafe.includes("Pão") ? 
-                "<span class='text-red-400'>[Carbo zerado no almoço (Pão comido de manhã)]</span>" : 
-                sortear(bd.tuberculos.filter(t => !t.includes("Pão")));
-
-            let volAlmoco = sortear(bd.vegetais_volume);
-            let sabAlmoco = sortear(bd.vegetais_sabor);
-            let tempAlmoco = sortear(bd.temperos);
-            
-            const itensAlmoco = [protAlmoco, carboAlmoco, `${volAlmoco} + ${sabAlmoco}`, `Preparo: ${tempAlmoco}`];
-            itensAlmoco.forEach(item => listaAlmoco.innerHTML += `<li>• ${item}</li>`);
-
-            // --- LÓGICA DA JANTA ---
-            let protJanta = sortear(bd.proteinas_janta);
-            
-            // Impede repetir a mesma carne do almoço
-            while (protJanta === protAlmoco || protJanta === protCafe) {
-                protJanta = sortear(bd.proteinas_janta); 
+            if(estado.comeuPaoManha) {
+                document.getElementById('aviso-almoco').classList.remove('hidden');
             }
+        }
 
-            let volJanta = sortear(bd.vegetais_volume);
-            let sabJanta = sortear(bd.vegetais_sabor);
-            let frutaJanta = sortear(bd.frutas);
+        // --- PASSO 2: ALMOÇO ---
+        function atualizaAlmoco() {
+            const base = document.getElementById('almoco-base').value;
+            estado.carneAlmoco = base;
+            const acomp = document.getElementById('almoco-acomp');
+            document.getElementById('almoco-acomp-div').classList.remove('hidden');
+            
+            let opcoes = `<option value="">Selecione a combinação perfeita...</option>`;
 
-            const itensJanta = [protJanta, `<span class="text-green-400 font-semibold">[Zero Raízes - Foco em Secar]</span>`, `${volJanta} + ${sabJanta}`, `Sobremesa: ${frutaJanta}`];
-            itensJanta.forEach(item => listaJanta.innerHTML += `<li>• ${item}</li>`);
+            // Regra do Carbo (Baseado no café da manhã)
+            let carbo = estado.comeuPaoManha ? "50g Batata Inglesa/Mandioca" : "100g Batata Doce/Mandioca";
+            let abobora = estado.comeuPaoManha ? "100g Abóbora (Reduzido)" : "150g Abóbora (Liberado)";
 
-            document.getElementById('resultado').classList.remove('hidden');
+            // Acompanhamentos Específicos por Carne
+            if(base === 'sassami') {
+                opcoes += `<option value="curry">${carbo} + 150g Brócolis/Couve-Flor + Cebola + 10g Curry Daiso</option>`;
+                opcoes += `<option value="refogado">${abobora} + 150g Ora-pro-nóbis refogada com Alho e Tomate</option>`;
+            } else if(base === 'tilapia') {
+                opcoes += `<option value="fresco">${carbo} + 150g Acelga e Espinafre tostados + Rabanete</option>`;
+                opcoes += `<option value="pure">${abobora} em purê + 150g Berinjela e Abobrinha no Alho</option>`;
+            } else if(base === 'atum' || base === 'sardinha') {
+                opcoes += `<option value="crua">${carbo} + 150g Repolho Branco cru + 50g Cenoura/Beterraba ralada</option>`;
+                opcoes += `<option value="mexido">${abobora} + 150g Espinafre e Pimentão</option>`;
+            }
+            acomp.innerHTML = opcoes;
+        }
+
+        function liberarFrutaAlmoco() { document.getElementById('almoco-fruta').classList.remove('hidden'); }
+
+        function travarAlmoco() {
+            document.getElementById('almoco-base').disabled = true;
+            document.getElementById('almoco-acomp').disabled = true;
+            document.getElementById('almoco-fruta').disabled = true;
+            document.getElementById('btn-almoco').classList.add('hidden');
+            
+            // Destrava Pré-Treino
+            document.getElementById('step-pre').classList.remove('hidden', 'opacity-50', 'pointer-events-none');
+        }
+
+        // --- PASSO 3: PRÉ-TREINO ---
+        function travarPre() {
+            document.getElementById('pre-base').disabled = true;
+            document.getElementById('btn-pre').classList.add('hidden');
+            
+            // Destrava Janta e Popula as carnes filtrando a do almoço
+            const janta = document.getElementById('step-janta');
+            janta.classList.remove('hidden', 'opacity-50', 'pointer-events-none');
+
+            const baseJanta = document.getElementById('janta-base');
+            let carnesJanta = `<option value="">Selecione...</option><option value="ovos">3 Ovos Mexidos (Rápido)</option>`;
+            if(estado.carneAlmoco !== 'sassami') carnesJanta += `<option value="sassami">120g Sassami Desfiado</option>`;
+            if(estado.carneAlmoco !== 'tilapia') carnesJanta += `<option value="tilapia">120g Tilápia Grelhada</option>`;
+            if(estado.carneAlmoco !== 'atum') carnesJanta += `<option value="atum">1 Lata Atum</option>`;
+            if(estado.carneAlmoco !== 'sardinha') carnesJanta += `<option value="sardinha">1 Lata Sardinha</option>`;
+            
+            baseJanta.innerHTML = carnesJanta;
+        }
+
+        // --- PASSO 4: JANTA ---
+        function atualizaJanta() {
+            const base = document.getElementById('janta-base').value;
+            const acomp = document.getElementById('janta-acomp');
+            document.getElementById('janta-acomp-div').classList.remove('hidden');
+
+            // Regra da Janta: Zero Carbo Pesado. Só volume absurdo e abacate como gordura boa.
+            let opcoes = `<option value="">Como preparar?</option>`;
+            if(base === 'ovos') {
+                opcoes += `<option value="orapro">Omeletão: Misturar com 150g Ora-pro-nóbis e Tomate</option>`;
+                opcoes += `<option value="acelga">Mexido com 150g Acelga (Secada na frigideira) e Cebola</option>`;
+            } else if(base === 'sassami' || base === 'tilapia') {
+                opcoes += `<option value="brocolis">150g Brócolis e Espinafre + 50g Pepino</option>`;
+                opcoes += `<option value="abacate">150g Couve-flor + 50g Abacate Amassado (Creme)</option>`;
+            } else {
+                opcoes += `<option value="salada">Saladão: 150g Repolho e Cenoura Ralada (Muita mastigação)</option>`;
+            }
+            acomp.innerHTML = opcoes;
+        }
+
+        function liberarFrutaJanta() { document.getElementById('janta-fruta').classList.remove('hidden'); }
+
+        function finalizarDia() {
+            document.getElementById('janta-base').disabled = true;
+            document.getElementById('janta-acomp').disabled = true;
+            document.getElementById('janta-fruta').disabled = true;
+            document.getElementById('btn-janta').classList.add('hidden');
+            
+            document.getElementById('msg-sucesso').classList.remove('hidden');
         }
     </script>
 </body>
