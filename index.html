@@ -22,182 +22,108 @@
 
     <div id="area-print" class="max-w-md mx-auto bg-gray-800 rounded-xl shadow-lg p-6 border-t-4 border-green-500 mt-4 md:mt-8 relative">
         <h1 class="text-2xl font-bold text-green-400 mb-1">Cardápio Nivelado</h1>
-        <p class="text-sm text-gray-400 mb-6">1600-1700 kcal | Carbos Mistos | Sem Carne Vermelha</p>
+        <p class="text-sm text-gray-400 mb-6">Meta: 1500 - 1600 kcal | Sem Carne Vermelha</p>
 
         <div class="mb-8 border-l-4 border-yellow-500 pl-4">
             <h2 class="text-lg font-bold text-yellow-400 mb-3">1. Pequeno-Almoço</h2>
-            
-            <select id="cafe-prot" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-yellow-400"></select>
-
-            <select id="cafe-carb" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-yellow-400"></select>
-
-            <select id="cafe-gordura" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-yellow-400"></select>
-
-            <select id="cafe-fruta" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 outline-none border border-gray-600 focus:border-yellow-400"></select>
+            <select id="cafe-prot" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 border border-gray-600 focus:border-yellow-400"></select>
+            <select id="cafe-carb" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 border border-gray-600 focus:border-yellow-400"></select>
+            <select id="cafe-fruta" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 border border-gray-600 focus:border-yellow-400"></select>
         </div>
 
         <div id="step-almoco" class="mb-8 border-l-4 border-blue-500 pl-4 opacity-50 pointer-events-none transition-all duration-300">
             <h2 class="text-lg font-bold text-blue-400 mb-1">2. Almoço</h2>
-
-            <select id="almoco-prot" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-blue-400"></select>
-
-            <select id="almoco-carb" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-blue-400"></select>
-
-            <select id="almoco-folhas" onchange="atualizarMotor()" class="w-full bg-gray-800 text-green-300 rounded p-2 mb-2 outline-none border border-green-600 focus:border-green-400"></select>
-
-            <select id="almoco-veg" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-blue-400"></select>
-
-            <select id="almoco-sabor" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-blue-400"></select>
-
-            <select id="almoco-tempero" onchange="atualizarMotor()" class="w-full bg-gray-800 text-yellow-300 rounded p-2 outline-none border border-yellow-600 focus:border-yellow-400"></select>
+            <select id="almoco-prot" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 border border-gray-600"></select>
+            <select id="almoco-carb" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 border border-gray-600"></select>
+            <select id="almoco-folhas" onchange="atualizarMotor()" class="w-full bg-gray-800 text-green-300 rounded p-2 mb-2 border border-green-600"></select>
+            <select id="almoco-veg" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 border border-gray-600"></select>
+            <select id="almoco-tempero" onchange="atualizarMotor()" class="w-full bg-gray-800 text-yellow-300 rounded p-2 border border-yellow-600"></select>
         </div>
 
         <div id="step-pre" class="mb-8 border-l-4 border-orange-500 pl-4 opacity-50 pointer-events-none transition-all duration-300">
-            <h2 class="text-lg font-bold text-orange-400 mb-3">3. Pré-Treino (Tarde)</h2>
-
-            <select id="pre-prot" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-orange-400"></select>
-
-            <select id="pre-gordura" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-orange-400"></select>
-
-            <select id="pre-fruta" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-orange-400"></select>
-
-            <select id="pre-bebida" onchange="atualizarMotor()" class="w-full bg-gray-800 text-blue-300 rounded p-2 outline-none border border-blue-600 focus:border-blue-400">
-                <option value="">Bebida Pré-Treino...</option>
-                <option value="Agua ou Cafe">Água ou Café Preto</option>
-                <option value="Monster Zero">Monster ZERO (Branco/Ultra)</option>
+            <h2 class="text-lg font-bold text-orange-400 mb-3">3. Pré-Treino</h2>
+            <select id="pre-prot" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 border border-gray-600"></select>
+            <select id="pre-fruta" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 border border-gray-600"></select>
+            <select id="pre-bebida" onchange="atualizarMotor()" class="w-full bg-gray-800 text-blue-300 rounded p-2 border border-blue-600">
+                <option value="">Bebida...</option>
+                <option value="Agua ou Cafe">Água ou Café</option>
+                <option value="Monster Zero">Monster Zero</option>
             </select>
         </div>
 
         <div id="step-janta" class="mb-6 border-l-4 border-indigo-500 pl-4 opacity-50 pointer-events-none transition-all duration-300">
-            <h2 class="text-lg font-bold text-indigo-400 mb-1">4. Jantar (Pós-Treino)</h2>
-
-            <select id="janta-prot" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-indigo-400"></select>
-            
-            <select id="janta-carb" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-indigo-400"></select>
-
-            <select id="janta-folhas" onchange="atualizarMotor()" class="w-full bg-gray-800 text-green-300 rounded p-2 mb-2 outline-none border border-green-600 focus:border-green-400"></select>
-
-            <select id="janta-veg" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-indigo-400"></select>
-
-            <select id="janta-sabor" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-indigo-400"></select>
-
-            <select id="janta-tempero" onchange="atualizarMotor()" class="w-full bg-gray-800 text-yellow-300 rounded p-2 mb-2 outline-none border border-yellow-600 focus:border-yellow-400"></select>
-
-            <select id="janta-fruta" onchange="finalizar()" class="w-full bg-gray-700 text-white rounded p-2 outline-none border border-gray-600 focus:border-indigo-400"></select>
+            <h2 class="text-lg font-bold text-indigo-400 mb-1">4. Jantar</h2>
+            <select id="janta-prot" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 border border-gray-600"></select>
+            <select id="janta-carb" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 border border-gray-600"></select>
+            <select id="janta-folhas" onchange="atualizarMotor()" class="w-full bg-gray-800 text-green-300 rounded p-2 mb-2 border border-green-600"></select>
+            <select id="janta-tempero" onchange="atualizarMotor()" class="w-full bg-gray-800 text-yellow-300 rounded p-2 mb-2 border border-yellow-600"></select>
+            <select id="janta-fruta" onchange="finalizar()" class="w-full bg-gray-700 text-white rounded p-2 border border-gray-600"></select>
         </div>
 
         <div id="assinatura-imagem" class="hidden mt-6 text-center text-xs text-gray-500">
-            Meta 1600-1700 kcal | Foco em Definição e Volume Lower
+            Foco em Folhas e Definição | Meta: 65kg
         </div>
     </div>
 
-    <div id="msg-sucesso" class="hidden max-w-md mx-auto text-center mt-4">
+    <div id="msg-sucesso" class="hidden max-w-md mx-auto text-center mt-4 px-4">
         <button onclick="salvarImagem()" class="w-full bg-green-500 text-gray-900 font-extrabold py-4 rounded-lg shadow-lg hover:bg-green-400 transition">
-            Salvar Imagem na Galeria
+            📸 Salvar Cardápio
         </button>
     </div>
 
     <script>
-        // BANCO DE DADOS NIVELADO (1600 - 1700 kcal)
         const nutri = {
-            // Proteínas Principais (~145 kcal)
+            // Proteínas Principais (~140-150 kcal)
             "120g Sassami (Peso Cru)": { kcal: 143, prot: 26 },
             "150g Tilápia (Peso Cru)": { kcal: 144, prot: 30 },
             "1 Lata de Atum em Água": { kcal: 150, prot: 33 },
-            
-            // Proteínas Leves/Extras (~145 kcal)
+            "1 Lata de Sardinha (Escorrida)": { kcal: 150, prot: 17 },
             "2 Ovos Grandes": { kcal: 146, prot: 13 },
             "150g Iogurte Grego": { kcal: 140, prot: 11 },
-            "1 Lata de Sardinha (Escorrida)": { kcal: 150, prot: 17 },
-            "1 Dose Whey Protein": { kcal: 120, prot: 24 },
-            
-            // Carboidratos Normais (~150 kcal) - Café e Janta
-            "175g Batata Inglesa": { kcal: 150, prot: 3.5 },
-            "115g Arroz Branco (Cozido)": { kcal: 150, prot: 3 },
-            "Misto: 55g Arroz + 100g Feijão": { kcal: 147, prot: 6 },
-            "Misto: 85g Batata + 100g Feijão": { kcal: 149, prot: 6.5 },
-            "Misto: 85g Batata + 55g Arroz": { kcal: 144, prot: 3.2 },
+
+            // Carboidratos Ajustados (~130-140 kcal)
+            "150g Batata Inglesa": { kcal: 129, prot: 3 },
+            "170g Batata Doce (Cozida)": { kcal: 130, prot: 2.2 },
+            "100g Mandioca (Cozida)": { kcal: 125, prot: 0.6 },
+            "100g Arroz Branco (Cozido)": { kcal: 130, prot: 2.5 },
             "1 Pão Francês (50g)": { kcal: 140, prot: 4.5 },
             "Zero Carbo": { kcal: 0, prot: 0 },
-            
-            // Carbos Almoço Alto (~250 kcal)
-            "290g Batata Inglesa": { kcal: 250, prot: 5.8 },
-            "190g Arroz Branco (Cozido)": { kcal: 247, prot: 4.7 },
-            "Misto: 95g Arroz + 160g Feijão": { kcal: 244, prot: 9.5 },
-            "Misto: 145g Batata + 95g Arroz": { kcal: 248, prot: 5.9 },
-            "Misto: 145g Batata + 160g Feijão": { kcal: 246, prot: 10.5 },
-            "70g Macarrão (Peso Cru)": { kcal: 245, prot: 7.7 },
-            "Zero Carbo": { kcal: 0, prot: 0 },
-            
-            // Gorduras / Extras (~100 kcal)
-            "1 Colher Sopa (12g) Azeite": { kcal: 108, prot: 0 },
-            "15g Pasta de Amendoim": { kcal: 90, prot: 4 },
-            "30g Queijo Mussarela": { kcal: 96, prot: 7 },
-            "15g Castanhas ou Nozes": { kcal: 90, prot: 2 },
-            "Zero Extra": { kcal: 0, prot: 0 },
-            
-            // Folhas Verdes Livres (~15 a 30 kcal)
-            "Mix de Alface, Rúcula e Agrião": { kcal: 15, prot: 1 },
-            "150g Repolho Fatiado": { kcal: 35, prot: 1.5 },
-            "150g Couve Manteiga Refogada": { kcal: 45, prot: 3 },
-            "150g Acelga ou Espinafre": { kcal: 30, prot: 2 },
-            
-            // Vegetais Volume (Todas ~35 kcal)
+
+            // Folhas (Praticamente livres, volume alto)
+            "Mix Alface e Rúcula (Livre)": { kcal: 15, prot: 1 },
+            "150g Espinafre Cozido": { kcal: 34, prot: 4 },
+            "100g Brócolis Cozido": { kcal: 35, prot: 3 },
+            "150g Repolho Fatiado": { kcal: 37, prot: 1.5 },
+            "150g Acelga": { kcal: 22, prot: 2 },
+
+            // Vegetais de Volume/Sabor
             "90g Ora-pro-nóbis": { kcal: 36, prot: 2.7 },
-            "100g Brócolis": { kcal: 35, prot: 3.5 },
-            "100g Couve-flor": { kcal: 35, prot: 3 },
-            "145g Abobrinha": { kcal: 35, prot: 2.2 },
-            "115g Berinjela": { kcal: 35, prot: 1.7 },
-            
-            // Vegetais Salada/Sabor (Todas ~10 kcal)
+            "145g Abobrinha": { kcal: 35, prot: 2 },
             "65g Tomate": { kcal: 10, prot: 0.6 },
-            "30g Cenoura Ralada": { kcal: 10, prot: 0.3 },
-            "30g Beterraba": { kcal: 10, prot: 0.3 },
-            "100g Pepino": { kcal: 10, prot: 0.5 },
-            "50g Pimentão": { kcal: 10, prot: 0.5 },
-            "Zero Salada Extra": { kcal: 0, prot: 0 },
-            
-            // Frutas Cotadas (Todas ~60 kcal)
+            "100g Pepino": { kcal: 15, prot: 0.7 },
+            "Zero Extra": { kcal: 0, prot: 0 },
+
+            // Frutas (~60 kcal)
             "115g Maçã": { kcal: 60, prot: 0.3 },
             "160g Laranja": { kcal: 60, prot: 1.6 },
-            "130g Ameixa": { kcal: 60, prot: 1 },
-            "115g Pera": { kcal: 60, prot: 0.5 },
-            "100g Manga": { kcal: 60, prot: 0.5 },
-            "85g Caqui": { kcal: 60, prot: 0.3 },
             "205g Melão": { kcal: 60, prot: 1.4 },
             "150g Mamão": { kcal: 60, prot: 0.7 },
             "65g Banana": { kcal: 60, prot: 0.8 },
             "Zero Fruta": { kcal: 0, prot: 0 },
-            
-            // TEMPEROS COM PESO EXATO
-            "100g Cebola Inteira + 5g Alho/Sal": { kcal: 45, prot: 1.2 },
-            "25g Cebola (1/4) + 5g Alho/Sal": { kcal: 15, prot: 0.4 },
-            "5g Fio de Azeite + 5g Páprica": { kcal: 50, prot: 0 },
-            "15g Mostarda Amarela + 5g Pimenta": { kcal: 10, prot: 0.5 },
-            "15g Molho Shoyu + 5g Gengibre": { kcal: 15, prot: 1 },
-            "30g Suco de Limão + 5g Ervas Finas": { kcal: 10, prot: 0 },
-            "0g Sem Tempero (Puro)": { kcal: 0, prot: 0 },
-            
-            "Agua ou Cafe": { kcal: 0, prot: 0 },
-            "Monster Zero": { kcal: 10, prot: 0 }
+
+            // Temperos
+            "Cebola Inteira (100g)": { kcal: 40, prot: 1 },
+            "Alho, Cebola e Sal (Misto)": { kcal: 10, prot: 0 },
+            "Mostarda Amarela (15g)": { kcal: 10, prot: 0.5 },
+            "Shoyu (15ml)": { kcal: 12, prot: 1 },
+            "Monster Zero": { kcal: 10, prot: 0 },
+            "Agua ou Cafe": { kcal: 0, prot: 0 }
         };
 
-        const protBase = ["120g Sassami (Peso Cru)", "150g Tilápia (Peso Cru)", "1 Lata de Atum em Água"];
-        const protLeve = ["2 Ovos Grandes", "150g Iogurte Grego", "1 Lata de Sardinha (Escorrida)", "1 Dose Whey Protein"];
-        
-        const carboNormal = ["175g Batata Inglesa", "115g Arroz Branco (Cozido)", "Misto: 55g Arroz + 100g Feijão", "Misto: 85g Batata + 100g Feijão", "Misto: 85g Batata + 55g Arroz", "1 Pão Francês (50g)", "Zero Carbo"];
-        
-        const carboAlto = ["290g Batata Inglesa", "190g Arroz Branco (Cozido)", "Misto: 95g Arroz + 160g Feijão", "Misto: 145g Batata + 95g Arroz", "Misto: 145g Batata + 160g Feijão", "70g Macarrão (Peso Cru)", "Zero Carbo"];
-        
-        const gorduras = ["1 Colher Sopa (12g) Azeite", "15g Pasta de Amendoim", "30g Queijo Mussarela", "15g Castanhas ou Nozes", "Zero Extra"];
-        
-        const folhasVerdes = ["Mix de Alface, Rúcula e Agrião", "150g Repolho Fatiado", "150g Couve Manteiga Refogada", "150g Acelga ou Espinafre"];
-        const vegVolume = ["90g Ora-pro-nóbis", "100g Brócolis", "100g Couve-flor", "145g Abobrinha", "115g Berinjela"];
-        const vegSabor = ["65g Tomate", "30g Cenoura Ralada", "30g Beterraba", "100g Pepino", "50g Pimentão", "Zero Salada Extra"];
-        
-        const frutasTotais = ["115g Maçã", "160g Laranja", "130g Ameixa", "115g Pera", "100g Manga", "85g Caqui", "205g Melão", "150g Mamão", "65g Banana", "Zero Fruta"];
-        
-        const opcoesTempero = ["100g Cebola Inteira + 5g Alho/Sal", "25g Cebola (1/4) + 5g Alho/Sal", "5g Fio de Azeite + 5g Páprica", "15g Mostarda Amarela + 5g Pimenta", "15g Molho Shoyu + 5g Gengibre", "30g Suco de Limão + 5g Ervas Finas", "0g Sem Tempero (Puro)"];
+        const frutas = ["115g Maçã", "160g Laranja", "205g Melão", "150g Mamão", "65g Banana", "Zero Fruta"];
+        const folhas = ["Mix Alface e Rúcula (Livre)", "150g Espinafre Cozido", "100g Brócolis Cozido", "150g Repolho Fatiado", "150g Acelga"];
+        const carbos = ["150g Batata Inglesa", "170g Batata Doce (Cozida)", "100g Mandioca (Cozida)", "100g Arroz Branco (Cozido)", "1 Pão Francês (50g)", "Zero Carbo"];
+        const temperos = ["Cebola Inteira (100g)", "Alho, Cebola e Sal (Misto)", "Mostarda Amarela (15g)", "Shoyu (15ml)"];
 
         function popularSelect(id, placeholder, opcoes) {
             const select = document.getElementById(id);
@@ -207,37 +133,31 @@
         }
 
         window.onload = () => {
-            popularSelect('cafe-prot', '1. Proteína Base (~145kcal)...', protBase);
-            popularSelect('cafe-carb', '2. Carboidrato Normal (~150kcal)...', carboNormal);
-            popularSelect('cafe-gordura', '3. Gordura/Extra (~100kcal)...', gorduras);
-            popularSelect('cafe-fruta', '4. Fruta Nivelada (~60kcal)...', frutasTotais);
-            
-            popularSelect('almoco-prot', '1. Proteína Base (~145kcal)...', protBase);
-            popularSelect('almoco-carb', '2. Carboidrato Alto (~250kcal)...', carboAlto);
-            popularSelect('almoco-folhas', '3. Folhas Verdes (Vontade Livre)...', folhasVerdes);
-            popularSelect('almoco-veg', '4. Vegetal Volume (~35kcal)...', vegVolume);
-            popularSelect('almoco-sabor', '5. Salada extra (~10kcal)...', vegSabor);
-            popularSelect('almoco-tempero', '6. Tempero com Peso...', opcoesTempero);
-            
-            popularSelect('pre-prot', '1. Proteína Leve (~145kcal)...', protLeve);
-            popularSelect('pre-gordura', '2. Gordura/Extra (~100kcal)...', gorduras);
-            popularSelect('pre-fruta', '3. Fruta Nivelada (~60kcal)...', frutasTotais);
-            
-            popularSelect('janta-prot', '1. Proteína Base (~145kcal)...', protBase);
-            popularSelect('janta-carb', '2. Carboidrato Normal (~150kcal)...', carboNormal);
-            popularSelect('janta-folhas', '3. Folhas Verdes (Vontade Livre)...', folhasVerdes);
-            popularSelect('janta-veg', '4. Vegetal Volume (~35kcal)...', vegVolume);
-            popularSelect('janta-sabor', '5. Salada extra (~10kcal)...', vegSabor);
-            popularSelect('janta-tempero', '6. Tempero com Peso...', opcoesTempero);
-            popularSelect('janta-fruta', '7. Fruta Nivelada (~60kcal)...', frutasTotais);
+            popularSelect('cafe-prot', '1. Proteína Base...', ["120g Sassami (Peso Cru)", "150g Tilápia (Peso Cru)", "2 Ovos Grandes", "150g Iogurte Grego"]);
+            popularSelect('cafe-carb', '2. Hidrato...', carbos);
+            popularSelect('cafe-fruta', '3. Fruta...', frutas);
+            popularSelect('cafe-tempero', '4. Tempero...', temperos);
+
+            popularSelect('almoco-prot', '1. Proteína...', ["120g Sassami (Peso Cru)", "150g Tilápia (Peso Cru)", "1 Lata de Atum em Água"]);
+            popularSelect('almoco-carb', '2. Hidrato...', carbos);
+            popularSelect('almoco-folhas', '3. Folhas (Verdes)...', folhas);
+            popularSelect('almoco-veg', '4. Vegetal Volume...', ["90g Ora-pro-nóbis", "145g Abobrinha", "65g Tomate", "100g Pepino", "Zero Extra"]);
+            popularSelect('almoco-tempero', '5. Tempero...', temperos);
+
+            popularSelect('pre-prot', '1. Proteína Leve...', ["2 Ovos Grandes", "150g Iogurte Grego"]);
+            popularSelect('pre-fruta', '2. Fruta...', frutas);
+
+            popularSelect('janta-prot', '1. Proteína...', ["120g Sassami (Peso Cru)", "150g Tilápia (Peso Cru)", "1 Lata de Sardinha (Escorrida)"]);
+            popularSelect('janta-carb', '2. Hidrato...', carbos);
+            popularSelect('janta-folhas', '3. Folhas (Verdes)...', folhas);
+            popularSelect('janta-tempero', '4. Tempero...', temperos);
+            popularSelect('janta-fruta', '5. Fruta...', frutas);
             
             atualizarMotor();
         }
 
         function calcularMacros() {
-            let totalKcal = 0;
-            let totalProt = 0;
-            
+            let totalKcal = 0; let totalProt = 0;
             const selects = document.querySelectorAll('select');
             selects.forEach(select => {
                 if(select.value && nutri[select.value]) {
@@ -245,74 +165,34 @@
                     totalProt += nutri[select.value].prot;
                 }
             });
-
             document.getElementById('total-kcal').innerText = Math.round(totalKcal);
             document.getElementById('total-prot').innerText = Math.round(totalProt * 10) / 10;
         }
 
         function atualizarMotor() {
             const pCafe = document.getElementById('cafe-prot').value;
-            const cCafe = document.getElementById('cafe-carb').value;
-            const gCafe = document.getElementById('cafe-gordura').value;
-            const fCafe = document.getElementById('cafe-fruta').value;
-
-            if(pCafe && cCafe && gCafe && fCafe) {
-                document.getElementById('step-almoco').classList.remove('opacity-50', 'pointer-events-none');
-            }
-
+            if(pCafe) document.getElementById('step-almoco').classList.remove('opacity-50', 'pointer-events-none');
             const pAlmoco = document.getElementById('almoco-prot').value;
-            const cAlmoco = document.getElementById('almoco-carb').value;
-            const foAlmoco = document.getElementById('almoco-folhas').value;
-            const vAlmoco = document.getElementById('almoco-veg').value;
-            const sAlmoco = document.getElementById('almoco-sabor').value;
-            const tAlmoco = document.getElementById('almoco-tempero').value;
-
-            if(pAlmoco && cAlmoco && foAlmoco && vAlmoco && sAlmoco && tAlmoco) {
-                document.getElementById('step-pre').classList.remove('opacity-50', 'pointer-events-none');
-            }
-
+            if(pAlmoco) document.getElementById('step-pre').classList.remove('opacity-50', 'pointer-events-none');
             const pPre = document.getElementById('pre-prot').value;
-            const gPre = document.getElementById('pre-gordura').value;
-            const fPre = document.getElementById('pre-fruta').value;
-            const bPre = document.getElementById('pre-bebida').value; 
-
-            if(pPre && gPre && fPre && bPre) {
-                document.getElementById('step-janta').classList.remove('opacity-50', 'pointer-events-none');
-            }
-
+            if(pPre) document.getElementById('step-janta').classList.remove('opacity-50', 'pointer-events-none');
             calcularMacros();
         }
 
         function finalizar() {
-            const pJanta = document.getElementById('janta-prot').value;
-            const cJanta = document.getElementById('janta-carb').value;
-            const foJanta = document.getElementById('janta-folhas').value;
-            const vJanta = document.getElementById('janta-veg').value;
-            const sJanta = document.getElementById('janta-sabor').value;
-            const tJanta = document.getElementById('janta-tempero').value;
-            const fJanta = document.getElementById('janta-fruta').value;
-
-            if(pJanta && cJanta && foJanta && vJanta && sJanta && tJanta && fJanta) {
-                document.getElementById('msg-sucesso').classList.remove('hidden');
-            }
+            document.getElementById('msg-sucesso').classList.remove('hidden');
             calcularMacros();
         }
 
         function salvarImagem() {
             const areaPrint = document.getElementById('area-print');
             const assinatura = document.getElementById('assinatura-imagem');
-            
             assinatura.classList.remove('hidden');
-
-            html2canvas(areaPrint, {
-                backgroundColor: "#1f2937",
-                scale: 2 
-            }).then(canvas => {
+            html2canvas(areaPrint, { backgroundColor: "#1f2937", scale: 2 }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Dieta-Tracker-1600kcal.png';
+                link.download = 'Dieta-1550kcal.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
-                
                 assinatura.classList.add('hidden');
             });
         }
