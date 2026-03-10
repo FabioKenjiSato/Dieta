@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
-<body class="bg-gray-900 text-gray-100 font-sans min-h-screen pb-40"> <div class="fixed bottom-0 left-0 w-full bg-gray-950 border-t border-green-500 p-4 z-50 shadow-2xl flex justify-between items-center px-6 md:px-12">
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen pb-40">
+
+    <div class="fixed bottom-0 left-0 w-full bg-gray-950 border-t border-green-500 p-4 z-50 shadow-2xl flex justify-between items-center px-6 md:px-12">
         <div>
             <p class="text-xs text-gray-400">Total do Dia:</p>
             <p class="text-xl font-bold text-orange-400"><span id="total-kcal">0</span> <span class="text-sm">kcal</span></p>
@@ -60,14 +62,14 @@
             <select id="janta-fruta" onchange="finalizar()" class="w-full bg-gray-700 text-white rounded p-2 outline-none border border-gray-600 focus:border-indigo-400"></select>
         </div>
 
-        <div id="assinatura-imagem" class="hidden mt-6 text-center text-xs text-gray-500">
+        <div id="assinatura-imagem" class="hidden mt-8 pb-4 text-center text-xs text-gray-500">
             Cardápio Dinâmico Fechado em 1700 kcal | 65kg
         </div>
     </div>
 
     <div class="max-w-md mx-auto text-center mt-6 mb-28 px-4">
         <button onclick="salvarImagem()" class="w-full bg-green-500 text-gray-900 font-extrabold py-4 rounded-lg shadow-lg hover:bg-green-400 transition">
-            📸 Salvar Imagem do Cardápio
+            Salvar Imagem do Cardápio
         </button>
     </div>
 
@@ -281,17 +283,20 @@
             
             assinatura.classList.remove('hidden');
 
-            html2canvas(areaPrint, {
-                backgroundColor: "#1f2937",
-                scale: 2 
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Cardapio-Tracker-1700kcal.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-                
-                assinatura.classList.add('hidden');
-            });
+            // Timeout adicionado para o DOM repintar e a caixa atualizar a altura antes do print
+            setTimeout(() => {
+                html2canvas(areaPrint, {
+                    backgroundColor: "#1f2937",
+                    scale: 2 
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'Cardapio-Tracker-1700kcal.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    
+                    assinatura.classList.add('hidden');
+                });
+            }, 150);
         }
     </script>
 </body>
