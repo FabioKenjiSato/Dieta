@@ -15,31 +15,32 @@
             <p class="text-xl font-bold text-orange-400"><span id="total-kcal">0</span> <span class="text-sm">kcal</span></p>
         </div>
         <div class="text-right">
-            <p class="text-xs text-gray-400">Proteína (Meta: 110g)</p>
+            <p class="text-xs text-gray-400">Proteína Diária</p>
             <p class="text-xl font-bold text-green-400"><span id="total-prot">0</span><span class="text-sm">g</span></p>
         </div>
     </div>
 
     <div id="area-print" class="max-w-md mx-auto bg-gray-800 rounded-xl shadow-lg p-6 border-t-4 border-green-500 mt-4 md:mt-8 relative">
-        <h1 class="text-2xl font-bold text-green-400 mb-1">Cardápio do Dia</h1>
-        <p class="text-sm text-gray-400 mb-6">Proteína pesada de dia, digestão leve à noite.</p>
+        <h1 class="text-2xl font-bold text-green-400 mb-1">Cardápio Nivelado</h1>
+        <p class="text-sm text-gray-400 mb-6">Os pesos foram ajustados para as calorias baterem iguais.</p>
 
         <div class="mb-8 border-l-4 border-yellow-500 pl-4">
             <h2 class="text-lg font-bold text-yellow-400 mb-3">☕ 1. Café da Manhã</h2>
             
             <select id="cafe-prot" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-yellow-400">
-                <option value="">1. Proteína Base (Pesada)...</option>
-                <option value="120g Sassami">120g Sassami</option>
-                <option value="120g Tilápia">120g Tilápia</option>
+                <option value="">1. Proteína Base (~143 kcal)...</option>
+                <option value="120g Sassami (Peso Cru)">120g Sassami (Peso Cru)</option>
+                <option value="150g Tilápia (Peso Cru)">150g Tilápia (Peso Cru)</option>
             </select>
 
             <select id="cafe-carb" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-yellow-400">
-                <option value="">2. Carboidrato...</option>
+                <option value="">2. Carboidrato (~130 kcal)...</option>
                 <option value="Zero Carbo">Zero Carbo (Deixa o peso pro almoço)</option>
-                <option value="1 Pão Francês">1 Pão Francês (50g)</option>
-                <option value="100g Batata Inglesa">100g Batata Inglesa</option>
-                <option value="100g Batata Doce">100g Batata Doce</option>
-                <option value="100g Mandioca">100g Mandioca</option>
+                <option value="1 Pão Francês (50g)">1 Pão Francês (50g)</option>
+                <option value="150g Batata Inglesa">150g Batata Inglesa</option>
+                <option value="170g Batata Doce">170g Batata Doce</option>
+                <option value="105g Mandioca">105g Mandioca</option>
+                <option value="270g Abóbora">270g Abóbora</option>
             </select>
 
             <select id="cafe-tempero" onchange="atualizarMotor()" class="w-full bg-gray-800 text-yellow-300 rounded p-2 mb-2 outline-none border border-yellow-600 focus:border-yellow-400"></select>
@@ -49,7 +50,6 @@
 
         <div id="step-almoco" class="mb-8 border-l-4 border-blue-500 pl-4 opacity-50 pointer-events-none transition-all duration-300">
             <h2 class="text-lg font-bold text-blue-400 mb-1">☀️ 2. Almoço</h2>
-            <div id="aviso-dinamico" class="text-xs text-green-400 font-bold mb-3 hidden">🔄 Carbo recalculado!</div>
 
             <select id="almoco-prot" onchange="atualizarMotor()" class="w-full bg-gray-700 text-white rounded p-2 mb-2 outline-none border border-gray-600 focus:border-blue-400"></select>
 
@@ -93,58 +93,77 @@
         </div>
 
         <div id="assinatura-imagem" class="hidden mt-6 text-center text-xs text-gray-500">
-            Cardápio Gerado pelo Sistema | Meta: 65kg
+            Cotas Calóricas Niveladas | Meta: 65kg
         </div>
     </div>
 
-    <div id="msg-sucesso" class="hidden max-w-md mx-auto text-center bg-green-900 border border-green-500 rounded p-4 text-green-300 font-bold mt-4">
-        🎉 Dia montado! Você está em déficit calórico.
-        <button onclick="salvarImagem()" class="mt-4 w-full bg-white text-gray-900 font-bold py-3 rounded-lg shadow-lg hover:bg-gray-200 transition">
+    <div id="msg-sucesso" class="hidden max-w-md mx-auto text-center mt-4">
+        <button onclick="salvarImagem()" class="w-full bg-green-500 text-gray-900 font-extrabold py-4 rounded-lg shadow-lg hover:bg-green-400 transition">
             📸 Salvar Imagem na Galeria
         </button>
     </div>
 
     <script>
-        // BANCO DE DADOS NUTRICIONAL (Kcal, Proteína)
+        // BANCO DE DADOS NIVELADO (Porcentagens Exatas TACO)
         const nutri = {
-            "120g Sassami": { kcal: 130, prot: 28 },
-            "120g Tilápia": { kcal: 115, prot: 24 },
-            "1 Lata Atum": { kcal: 110, prot: 25 },
-            "1 Lata Sardinha": { kcal: 130, prot: 20 },
-            "3 Ovos": { kcal: 210, prot: 18 },
-            "150g Iogurte Grego": { kcal: 140, prot: 15 },
+            // Proteínas Pesadas (~143 kcal)
+            "120g Sassami (Peso Cru)": { kcal: 143, prot: 26 },
+            "150g Tilápia (Peso Cru)": { kcal: 144, prot: 30 },
             
+            // Proteínas Leves (~145 kcal)
+            "1 Lata Sardinha": { kcal: 160, prot: 20 },
+            "2 Ovos Grandes": { kcal: 146, prot: 13 },
+            "150g Iogurte Grego": { kcal: 140, prot: 11 },
+            
+            // Carboidratos (Base 130 kcal)
             "Zero Carbo": { kcal: 0, prot: 0 },
-            "1 Pão Francês": { kcal: 140, prot: 4 },
-            "100g Batata Inglesa": { kcal: 86, prot: 2 },
-            "150g Batata Inglesa (+50g Bônus)": { kcal: 129, prot: 3 },
-            "50g Batata Inglesa (-50g Corte)": { kcal: 43, prot: 1 },
-            "100g Batata Doce": { kcal: 86, prot: 1 },
-            "150g Batata Doce (+50g Bônus)": { kcal: 129, prot: 1.5 },
-            "50g Batata Doce (-50g Corte)": { kcal: 43, prot: 0.5 },
-            "100g Mandioca": { kcal: 160, prot: 1 },
-            "150g Mandioca (+50g Bônus)": { kcal: 240, prot: 1.5 },
-            "50g Mandioca (-50g Corte)": { kcal: 80, prot: 0.5 },
-            "150g Abóbora": { kcal: 60, prot: 1.5 },
-            "200g Abóbora (+50g Bônus)": { kcal: 80, prot: 2 },
-            "100g Abóbora (-50g Corte)": { kcal: 40, prot: 1 },
+            "1 Pão Francês (50g)": { kcal: 140, prot: 4.5 },
+            "150g Batata Inglesa": { kcal: 129, prot: 3 },
+            "170g Batata Doce": { kcal: 130, prot: 2.2 },
+            "105g Mandioca": { kcal: 131, prot: 0.6 },
+            "270g Abóbora": { kcal: 130, prot: 2.7 },
             
-            "150g Ora-pro-nóbis": { kcal: 40, prot: 3 },
-            "150g Acelga": { kcal: 25, prot: 1 },
-            "150g Repolho Branco": { kcal: 35, prot: 1 },
-            "150g Brócolis": { kcal: 50, prot: 4 },
-            "150g Couve-flor": { kcal: 35, prot: 3 },
-            "150g Espinafre": { kcal: 35, prot: 4 },
-            "150g Abobrinha": { kcal: 25, prot: 1 },
-            "150g Berinjela": { kcal: 35, prot: 1 },
+            // Carbos Almoço (Corte/Baixo ~65 kcal)
+            "75g Batata Inglesa (-Corte)": { kcal: 65, prot: 1.5 },
+            "85g Batata Doce (-Corte)": { kcal: 65, prot: 1.1 },
+            "50g Mandioca (-Corte)": { kcal: 63, prot: 0.3 },
+            "135g Abóbora (-Corte)": { kcal: 65, prot: 1.3 },
             
-            "50g Tomate": { kcal: 10, prot: 0 },
-            "50g Cenoura Ralada": { kcal: 20, prot: 0 },
-            "50g Beterraba": { kcal: 20, prot: 1 },
-            "50g Pepino": { kcal: 8, prot: 0 },
-            "50g Rabanete": { kcal: 8, prot: 0 },
-            "50g Pimentão": { kcal: 10, prot: 0 },
+            // Carbos Almoço (Bônus/Alto ~195 kcal)
+            "225g Batata Inglesa (+Bônus)": { kcal: 194, prot: 4.5 },
+            "250g Batata Doce (+Bônus)": { kcal: 192, prot: 3.2 },
+            "155g Mandioca (+Bônus)": { kcal: 194, prot: 0.9 },
+            "400g Abóbora (+Bônus)": { kcal: 192, prot: 4 },
+            
+            // Vegetais Volume (Todas ~35 kcal)
+            "90g Ora-pro-nóbis": { kcal: 36, prot: 2.7 },
+            "140g Acelga": { kcal: 35, prot: 1.4 },
+            "100g Repolho Branco": { kcal: 35, prot: 1 },
+            "100g Brócolis": { kcal: 35, prot: 3.5 },
+            "100g Couve-flor": { kcal: 35, prot: 3 },
+            "115g Espinafre": { kcal: 35, prot: 4.6 },
+            "145g Abobrinha": { kcal: 35, prot: 2.2 },
+            "115g Berinjela": { kcal: 35, prot: 1.7 },
+            
+            // Vegetais Salada/Sabor (Todas ~10 kcal)
+            "65g Tomate": { kcal: 10, prot: 0.6 },
+            "30g Cenoura Ralada": { kcal: 10, prot: 0.3 },
+            "30g Beterraba": { kcal: 10, prot: 0.3 },
+            "100g Pepino": { kcal: 10, prot: 0.5 },
+            "70g Rabanete": { kcal: 10, prot: 0.5 },
+            "50g Pimentão": { kcal: 10, prot: 0.5 },
             "Zero Extra": { kcal: 0, prot: 0 },
+            
+            // Frutas Cotadas (Todas ~60 kcal)
+            "115g Maçã": { kcal: 60, prot: 0.3 },
+            "160g Laranja": { kcal: 60, prot: 1.6 },
+            "130g Ameixa": { kcal: 60, prot: 1 },
+            "115g Pera": { kcal: 60, prot: 0.5 },
+            "100g Manga": { kcal: 60, prot: 0.5 },
+            "85g Caqui": { kcal: 60, prot: 0.3 },
+            "205g Melão": { kcal: 60, prot: 1.4 },
+            "150g Mamão": { kcal: 60, prot: 0.7 },
+            "65g Banana": { kcal: 60, prot: 0.8 },
             
             "Alho, Cebola e Sal (Clássico)": { kcal: 5, prot: 0 },
             "10g Curry Japonês Daiso": { kcal: 50, prot: 1 },
@@ -153,24 +172,14 @@
             "Açafrão e Cheiro Verde": { kcal: 5, prot: 0 },
             "Sem Tempero (Puro)": { kcal: 0, prot: 0 },
             
-            "100g Maçã": { kcal: 52, prot: 0 },
-            "100g Laranja": { kcal: 47, prot: 1 },
-            "100g Ameixa": { kcal: 46, prot: 0 },
-            "100g Pera": { kcal: 57, prot: 0 },
-            "100g Manga": { kcal: 60, prot: 0.5 },
-            "100g Caqui": { kcal: 70, prot: 0.5 },
-            "100g Melão": { kcal: 34, prot: 0.5 },
-            "100g Mamão": { kcal: 43, prot: 0.5 },
-            "100g Banana": { kcal: 89, prot: 1 },
-            
             "Agua ou Cafe": { kcal: 0, prot: 0 },
             "Monster Zero": { kcal: 10, prot: 0 }
         };
 
-        const vegVolume = ["150g Ora-pro-nóbis", "150g Acelga", "150g Repolho Branco", "150g Brócolis", "150g Couve-flor", "150g Espinafre", "150g Abobrinha", "150g Berinjela"];
-        const vegSabor = ["50g Tomate", "50g Cenoura Ralada", "50g Beterraba", "50g Pepino", "50g Rabanete", "50g Pimentão", "Zero Extra"];
+        const frutasTotais = ["115g Maçã", "160g Laranja", "130g Ameixa", "115g Pera", "100g Manga", "85g Caqui", "205g Melão", "150g Mamão", "65g Banana"];
+        const vegVolume = ["90g Ora-pro-nóbis", "140g Acelga", "100g Repolho Branco", "100g Brócolis", "100g Couve-flor", "115g Espinafre", "145g Abobrinha", "115g Berinjela"];
+        const vegSabor = ["65g Tomate", "30g Cenoura Ralada", "30g Beterraba", "100g Pepino", "70g Rabanete", "50g Pimentão", "Zero Extra"];
         const opcoesTempero = ["Alho, Cebola e Sal (Clássico)", "10g Curry Japonês Daiso", "Limão, Pimenta do Reino e Orégano", "Páprica Defumada e Fio de Azeite", "Açafrão e Cheiro Verde", "Sem Tempero (Puro)"];
-        const frutasTotais = ["100g Maçã", "100g Laranja", "100g Ameixa", "100g Pera", "100g Manga", "100g Caqui", "100g Melão", "100g Mamão", "100g Banana"];
 
         function popularSelect(id, placeholder, opcoes) {
             const select = document.getElementById(id);
@@ -181,19 +190,19 @@
 
         window.onload = () => {
             popularSelect('cafe-tempero', '3. Tempero...', opcoesTempero);
-            popularSelect('cafe-fruta', '4. Fruta...', frutasTotais);
+            popularSelect('cafe-fruta', '4. Fruta Cotada (~60kcal)...', frutasTotais);
             
-            popularSelect('almoco-veg', '3. Vegetal de Volume...', vegVolume);
-            popularSelect('almoco-sabor', '4. Salada extra...', vegSabor);
+            popularSelect('almoco-veg', '3. Vegetal Volume (~35kcal)...', vegVolume);
+            popularSelect('almoco-sabor', '4. Salada extra (~10kcal)...', vegSabor);
             popularSelect('almoco-tempero', '5. Tempero da Panela...', opcoesTempero);
-            popularSelect('almoco-fruta', '6. Fruta...', frutasTotais);
+            popularSelect('almoco-fruta', '6. Fruta Cotada (~60kcal)...', frutasTotais);
             
-            popularSelect('pre-fruta', '2. Energia (Fruta)...', frutasTotais);
+            popularSelect('pre-fruta', '2. Fruta Cotada (~60kcal)...', frutasTotais);
             
-            popularSelect('janta-veg', '2. Vegetal Volume...', vegVolume);
-            popularSelect('janta-sabor', '3. Salada extra...', vegSabor);
+            popularSelect('janta-veg', '2. Vegetal Volume (~35kcal)...', vegVolume);
+            popularSelect('janta-sabor', '3. Salada extra (~10kcal)...', vegSabor);
             popularSelect('janta-tempero', '4. Tempero da Panela...', opcoesTempero);
-            popularSelect('janta-fruta', '5. Fruta...', frutasTotais);
+            popularSelect('janta-fruta', '5. Fruta Cotada (~60kcal)...', frutasTotais);
             
             atualizarMotor();
         }
@@ -211,7 +220,7 @@
             });
 
             document.getElementById('total-kcal').innerText = Math.round(totalKcal);
-            document.getElementById('total-prot').innerText = Math.round(totalProt);
+            document.getElementById('total-prot').innerText = Math.round(totalProt * 10) / 10;
         }
 
         function atualizarMotor() {
@@ -227,62 +236,59 @@
             const tAlmoco = document.getElementById('almoco-tempero').value;
             const fAlmoco = document.getElementById('almoco-fruta').value;
 
-            // --- REGRAS DO ALMOÇO ---
             if(pCafe && cCafe && tCafe && fCafe) {
                 document.getElementById('step-almoco').classList.remove('opacity-50', 'pointer-events-none');
             }
 
-            let protDisponiveisAlmoco = ["120g Sassami", "120g Tilápia"];
-            popularSelect('almoco-prot', '1. Proteína Base...', protDisponiveisAlmoco);
+            let protDisponiveisAlmoco = ["120g Sassami (Peso Cru)", "150g Tilápia (Peso Cru)"];
+            popularSelect('almoco-prot', '1. Proteína Base (~143kcal)...', protDisponiveisAlmoco);
 
-            // Dinâmica do Carboidrato
-            let pesoCarb = "100g";
-            let pesoAbobora = "150g";
-            let txtCarbBonus = "";
-            const aviso = document.getElementById('aviso-dinamico');
+            // MOTOR DINÂMICO DE CARBOIDRATOS
+            let carbosAlmoco = [];
             
             if(cCafe && cCafe.includes("Zero")) {
-                pesoCarb = "150g"; 
-                pesoAbobora = "200g";
-                txtCarbBonus = " (+50g Bônus)";
-                aviso.classList.remove('hidden');
+                carbosAlmoco = [
+                    "Zero Carbo",
+                    "225g Batata Inglesa (+Bônus)",
+                    "250g Batata Doce (+Bônus)",
+                    "155g Mandioca (+Bônus)",
+                    "400g Abóbora (+Bônus)"
+                ];
             } else if (cCafe && cCafe.includes("Pão")) {
-                pesoCarb = "50g"; 
-                pesoAbobora = "100g";
-                txtCarbBonus = " (-50g Corte)";
-                aviso.classList.remove('hidden');
+                carbosAlmoco = [
+                    "Zero Carbo",
+                    "75g Batata Inglesa (-Corte)",
+                    "85g Batata Doce (-Corte)",
+                    "50g Mandioca (-Corte)",
+                    "135g Abóbora (-Corte)"
+                ];
             } else {
-                aviso.classList.add('hidden');
+                carbosAlmoco = [
+                    "Zero Carbo",
+                    "150g Batata Inglesa",
+                    "170g Batata Doce",
+                    "105g Mandioca",
+                    "270g Abóbora"
+                ];
             }
+            popularSelect('almoco-carb', '2. Carboidrato Nivelado...', carbosAlmoco);
 
-            let carbosAlmoco = [
-                "Zero Carbo",
-                `${pesoCarb} Batata Inglesa${txtCarbBonus}`,
-                `${pesoCarb} Batata Doce${txtCarbBonus}`,
-                `${pesoCarb} Mandioca${txtCarbBonus}`,
-                `${pesoAbobora} Abóbora${txtCarbBonus}`
-            ];
-            popularSelect('almoco-carb', '2. Carboidrato...', carbosAlmoco);
-
-            // --- REGRAS DO PRÉ-TREINO ---
             if(pAlmoco && cAlmoco && vAlmoco && sAlmoco && tAlmoco && fAlmoco) {
                 document.getElementById('step-pre').classList.remove('opacity-50', 'pointer-events-none');
             }
 
-            popularSelect('pre-prot', '1. Proteína Leve...', ["3 Ovos", "150g Iogurte Grego"]);
+            popularSelect('pre-prot', '1. Proteína Leve (~145kcal)...', ["2 Ovos Grandes", "150g Iogurte Grego"]);
             const pPre = document.getElementById('pre-prot').value;
             const fPre = document.getElementById('pre-fruta').value;
             const bPre = document.getElementById('pre-bebida').value; 
 
-            // --- REGRAS DA JANTA ---
             if(pPre && fPre && bPre) {
                 document.getElementById('step-janta').classList.remove('opacity-50', 'pointer-events-none');
             }
 
-            let protDisponiveisJanta = ["3 Ovos", "150g Iogurte Grego", "1 Lata Sardinha"].filter(p => p !== pPre); 
-            popularSelect('janta-prot', '1. Proteína Base...', protDisponiveisJanta);
+            let protDisponiveisJanta = ["2 Ovos Grandes", "150g Iogurte Grego", "1 Lata Sardinha"].filter(p => p !== pPre); 
+            popularSelect('janta-prot', '1. Proteína Base (~145kcal)...', protDisponiveisJanta);
 
-            // Recalcula macros ao final de cada alteração
             calcularMacros();
         }
 
@@ -303,19 +309,17 @@
             const areaPrint = document.getElementById('area-print');
             const assinatura = document.getElementById('assinatura-imagem');
             
-            // Mostra a assinatura na foto
             assinatura.classList.remove('hidden');
 
             html2canvas(areaPrint, {
-                backgroundColor: "#1f2937", // Cor de fundo do Tailwind gray-800
-                scale: 2 // Alta qualidade
+                backgroundColor: "#1f2937",
+                scale: 2 
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Cardapio-Fabio-65kg.png';
+                link.download = 'Cardapio-Nivelado-65kg.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
                 
-                // Esconde a assinatura novamente
                 assinatura.classList.add('hidden');
             });
         }
