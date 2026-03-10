@@ -22,7 +22,7 @@
 
     <div id="area-print" class="max-w-md mx-auto bg-gray-800 rounded-xl shadow-lg p-6 border-t-4 border-green-500 mt-4 md:mt-8 relative">
         <h1 class="text-2xl font-bold text-green-400 mb-1">Cardápio Nivelado</h1>
-        <p class="text-sm text-gray-400 mb-6">Os pesos foram ajustados para as calorias baterem iguais.</p>
+        <p class="text-sm text-gray-400 mb-6">Temperos ajustados com peso exato para precisão.</p>
 
         <div class="mb-8 border-l-4 border-yellow-500 pl-4">
             <h2 class="text-lg font-bold text-yellow-400 mb-3">☕ 1. Café da Manhã</h2>
@@ -165,12 +165,15 @@
             "150g Mamão": { kcal: 60, prot: 0.7 },
             "65g Banana": { kcal: 60, prot: 0.8 },
             
-            "Alho, Cebola e Sal (Clássico)": { kcal: 5, prot: 0 },
+            // TEMPEROS COM PESO EXATO
+            "100g Cebola Inteira + 5g Alho/Sal": { kcal: 45, prot: 1.2 },
+            "25g Cebola (1/4) + 5g Alho/Sal": { kcal: 15, prot: 0.4 },
+            "5g Fio de Azeite + 5g Páprica": { kcal: 50, prot: 0 },
+            "15g Mostarda Amarela + 5g Pimenta": { kcal: 10, prot: 0.5 },
+            "15g Molho Shoyu + 5g Gengibre": { kcal: 15, prot: 1 },
+            "30g Suco de Limão + 5g Ervas Finas": { kcal: 10, prot: 0 },
             "10g Curry Japonês Daiso": { kcal: 50, prot: 1 },
-            "Limão, Pimenta do Reino e Orégano": { kcal: 5, prot: 0 },
-            "Páprica Defumada e Fio de Azeite": { kcal: 45, prot: 0 },
-            "Açafrão e Cheiro Verde": { kcal: 5, prot: 0 },
-            "Sem Tempero (Puro)": { kcal: 0, prot: 0 },
+            "0g Sem Tempero (Puro)": { kcal: 0, prot: 0 },
             
             "Agua ou Cafe": { kcal: 0, prot: 0 },
             "Monster Zero": { kcal: 10, prot: 0 }
@@ -179,7 +182,18 @@
         const frutasTotais = ["115g Maçã", "160g Laranja", "130g Ameixa", "115g Pera", "100g Manga", "85g Caqui", "205g Melão", "150g Mamão", "65g Banana"];
         const vegVolume = ["90g Ora-pro-nóbis", "140g Acelga", "100g Repolho Branco", "100g Brócolis", "100g Couve-flor", "115g Espinafre", "145g Abobrinha", "115g Berinjela"];
         const vegSabor = ["65g Tomate", "30g Cenoura Ralada", "30g Beterraba", "100g Pepino", "70g Rabanete", "50g Pimentão", "Zero Extra"];
-        const opcoesTempero = ["Alho, Cebola e Sal (Clássico)", "10g Curry Japonês Daiso", "Limão, Pimenta do Reino e Orégano", "Páprica Defumada e Fio de Azeite", "Açafrão e Cheiro Verde", "Sem Tempero (Puro)"];
+        
+        // Array atualizado com as novas opções
+        const opcoesTempero = [
+            "100g Cebola Inteira + 5g Alho/Sal", 
+            "25g Cebola (1/4) + 5g Alho/Sal", 
+            "5g Fio de Azeite + 5g Páprica",
+            "15g Mostarda Amarela + 5g Pimenta",
+            "15g Molho Shoyu + 5g Gengibre",
+            "30g Suco de Limão + 5g Ervas Finas",
+            "10g Curry Japonês Daiso", 
+            "0g Sem Tempero (Puro)"
+        ];
 
         function popularSelect(id, placeholder, opcoes) {
             const select = document.getElementById(id);
@@ -189,19 +203,19 @@
         }
 
         window.onload = () => {
-            popularSelect('cafe-tempero', '3. Tempero...', opcoesTempero);
+            popularSelect('cafe-tempero', '3. Tempero com Peso...', opcoesTempero);
             popularSelect('cafe-fruta', '4. Fruta Cotada (~60kcal)...', frutasTotais);
             
             popularSelect('almoco-veg', '3. Vegetal Volume (~35kcal)...', vegVolume);
             popularSelect('almoco-sabor', '4. Salada extra (~10kcal)...', vegSabor);
-            popularSelect('almoco-tempero', '5. Tempero da Panela...', opcoesTempero);
+            popularSelect('almoco-tempero', '5. Tempero com Peso...', opcoesTempero);
             popularSelect('almoco-fruta', '6. Fruta Cotada (~60kcal)...', frutasTotais);
             
             popularSelect('pre-fruta', '2. Fruta Cotada (~60kcal)...', frutasTotais);
             
             popularSelect('janta-veg', '2. Vegetal Volume (~35kcal)...', vegVolume);
             popularSelect('janta-sabor', '3. Salada extra (~10kcal)...', vegSabor);
-            popularSelect('janta-tempero', '4. Tempero da Panela...', opcoesTempero);
+            popularSelect('janta-tempero', '4. Tempero com Peso...', opcoesTempero);
             popularSelect('janta-fruta', '5. Fruta Cotada (~60kcal)...', frutasTotais);
             
             atualizarMotor();
